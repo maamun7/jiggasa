@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/maamun7/jiggasa/issues"
   },
-  "homepage": "https://github.com/maamun7/jiggasa#readme"
+  "homepage": "https://github.com/maamun7/jiggasa#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
 }
