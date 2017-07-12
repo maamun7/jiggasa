@@ -20,6 +20,15 @@
   },
   "homepage": "https://github.com/maamun7/jiggasa#readme",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "express-router": "0.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "eslint": "^4.2.0",
+    "nodemon": "^1.11.0"
   }
 }
