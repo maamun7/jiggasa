@@ -1,0 +1,22 @@
+{
+  "name": "jiggasa",
+  "version": "1.0.0",
+  "description": "Jiggasa in bengali",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maamun7/jiggasa.git"
+  },
+  "keywords": [
+    "jiggasa"
+  ],
+  "author": "Mamun Ahmed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maamun7/jiggasa/issues"
+  },
+  "homepage": "https://github.com/maamun7/jiggasa#readme"
+}
