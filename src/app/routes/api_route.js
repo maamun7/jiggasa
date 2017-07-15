@@ -1,8 +1,8 @@
 "use strict";
+import express from 'express';
+var router = express.Router();
+import car from './../controllers/api/cars';
 
-var express = require('express')
-    , router = express.Router();
-
-router.use('/cars', require('./../controllers/api/cars'));
+router.use('/cars', car);
 
 module.exports = router

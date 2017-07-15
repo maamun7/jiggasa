@@ -1,13 +1,16 @@
 "use strict";
 
-var express = require('express')
-    , app = express()
-    , swagger = require("swagger-node-express");
+import express from 'express';
+const app = express();
+import swagger from 'swagger-node-express';
+import config from '../config/config'
 
-app.use('/v1', require('./routes/api_route'));
+import apiRoute from './routes/api_route'
 
-app.listen(3000, function() {
-    console.log('Listening on port 3000...');
-});
+app.use('/v1', apiRoute);
 
-swagger.setAppHandler(app);
+
+app.listen(config.development.port, config.development.host,  config.development.callBack());
+
+
+//swagger.setAppHandler(app);

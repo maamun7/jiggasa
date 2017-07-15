@@ -8,7 +8,7 @@ router.get('/domestic', function(req, res) {
 
 // Wild animals page
 router.get('/wild', ( req, res ) => {
-    res.send('Wolf, Fox, Eagle');
+    res.send('Wolf, Fox, Eagle, Cobra, Tiger');
 });
 
 module.exports = router;
