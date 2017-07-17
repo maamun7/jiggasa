@@ -11,8 +11,16 @@ const carSchema = mongoose.Schema({
     car_brand: {
         type: String,
         required: true
+    },
+
+    make_year: {
+        type: String,
+        required: true
     }
 });
 
-module.exports = carSchema;
+/*module.exports = carSchema;
+module.exports.carModel = mongoose.model('car', carSchema);*/
+
+const Car =  module.exports = mongoose.model('Car', carSchema);
 
