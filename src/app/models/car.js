@@ -1,6 +1,7 @@
 "use strict";
 
 const mongoose = require('mongoose');
+mongoose.Promise = Promise;
 
 const carSchema = mongoose.Schema({
     car_name: {

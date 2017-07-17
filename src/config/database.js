@@ -10,7 +10,12 @@ const uri  = `${dbHost}:${dbPort}/${database}`;
 
 var options = {
     db: { native_parser: true },
-    server: { poolSize: 5 },
+    server: {
+        poolSize: 5,
+        auto_reconnect: true,
+        reconnectTries: 100,
+        reconnectInterval: 5000
+    },
     replset: { rs_name: 'myReplicaSetName' },
     user: dbUser,
     pass: dbPassword
@@ -23,3 +28,4 @@ mongoose.connect(uri, options, (err) => {
         console.log(`Established connection with mongodb at @host: ${dbHost}  @port: ${dbPort} @database: ${database}`);
     }
 });
+

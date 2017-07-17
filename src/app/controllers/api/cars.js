@@ -27,7 +27,7 @@ router.post('/wild', ( req, res, next ) => {
 
     newCar.save((error, car) => {
         if (error){
-            res.json({msg: 'Failed to add car'});
+            res.json({msg: 'Failed to add car' + error});
         } else {
             res.json({msg: 'Added car successfully '});
         }
