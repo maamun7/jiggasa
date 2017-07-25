@@ -5,4 +5,5 @@ import car from './../controllers/api/cars';
 
 router.use('/cars', car);
 
-module.exports = router
+
+module.exports = router;

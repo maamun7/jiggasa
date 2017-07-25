@@ -25,9 +25,13 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "express-joi-validation": "^0.1.0",
     "express-router": "0.0.1",
+    "joi": "^10.6.0",
     "mongodb": "^2.2.30",
     "mongoose": "4.10.8",
+    "mongoose-migration": "^0.2.0",
+    "mongoose-seeder": "^1.2.1",
     "swagger-node-express": "^2.1.3"
   },
   "devDependencies": {
