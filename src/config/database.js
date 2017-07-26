@@ -1,12 +1,9 @@
 "use strict";
 import mongoose from 'mongoose';
-let dbHost = 'mongodb://localhost';
-let dbPort = 27017;
-let dbUser = '';
-let dbPassword = '';
-let database = 'cars';
+//import config from 'config';
+import config from '../config/config'
 
-const uri  = `${dbHost}:${dbPort}/${database}`;
+const uri  = `${config.development.dbHost}:${config.development.dbPort}/${config.development.database}`;
 
 var options = {
     db: { native_parser: true },
@@ -17,15 +14,15 @@ var options = {
         reconnectInterval: 5000
     },
     replset: { rs_name: 'myReplicaSetName' },
-    user: dbUser,
-    pass: dbPassword
+    user: config.development.dbUser,
+    pass: config.development.dbPassword
 };
 
 mongoose.connect(uri, options, (err) => {
     if (err) {
-        console.log(`Unable to connect with mongodb at @host: ${dbHost}  @port: ${dbPort} @database: ${database}`);
+        console.log(`Unable to connect with mongodb at @host: ${config.development.dbHost}  @port: ${config.development.dbPort} @database: ${config.development.database}`);
     } else {
-        console.log(`Established connection with mongodb at @host: ${dbHost}  @port: ${dbPort} @database: ${database}`);
+        console.log(`Established connection with mongodb at @host: ${config.development.dbHost}  @port: ${config.development.dbPort} @database: ${config.development.database}`);
     }
 });
 

@@ -1,7 +1,7 @@
 var express = require('express')
     , router = express.Router();
 
-import Car from '../../models/car';
+import Car from '../../models/api/car';
 const validator = require('express-joi-validation')({ passError: true});
 import carValidator from '../../validations/api/car'
 
@@ -20,6 +20,7 @@ router.get('/wild', ( req, res, next ) => {
 
 //Added car
 router.post('/wild', validator.body(carValidator.createSchema, {joi: carValidator.joiOpts}), ( req, res, next ) => {
+//router.post('/wild', ( req, res, next ) => {
 
     let newCar = new Car ({
         car_name:req.body.car_name,

@@ -1,0 +1,8 @@
+{
+  "basepath": "./src/database/migrations",
+  "connection": "mongodb://localhost:27017/jiggasa_db",
+  "current_timestamp": 1501064970467,
+  "models": {
+    "User": "./src/app/models/api/Users"
+  }
+}
