@@ -1,21 +1,15 @@
 import { Seeder } from 'mongoose-data-seed';
 import userModel from '../../app/models/api/Users';
-
+import bcrypt from 'bcrypt';
+let salt = bcrypt.genSaltSync(10);
 let data = [{
     name: 'Mamun Ahmed',
     mobile: '01400000000',
     email: 'admin@admin.com',
-    password: '123123', password_confirmation: '123456',
+    password: bcrypt.hashSync('123456', salt),
+    salt:salt,
     gender: '1',
     is_admin: '1',
-    created_at: Date.now()
-}, {
-    name: 'Samin Ahmed',
-    mobile: '01400000001',
-    email: 'user@user.com',
-    password: '123123', password_confirmation: '123456',
-    gender: '1',
-    is_admin: '0',
     created_at: Date.now()
 }];
 

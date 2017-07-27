@@ -2,4 +2,4 @@
 /* Here is my application entry point */
 require('babel-register');
 require('babel-polyfill');
-require('./app/server');
+require('./app/app');

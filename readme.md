@@ -20,6 +20,7 @@ c
 For example:
 ./node_modules/mongoose-migration/bin/migrate.js  init
 
+Or install this module globally.
         
 ........................... Seeder (mongoose-data-seed) .....................................
 Init seeder:
@@ -31,3 +32,4 @@ Run all seeders:
 Or run specific seeders:
     md-seed run users posts comments
 
+Note: if 'md-seed' command doesn't found please install this module globally.
