@@ -5,15 +5,7 @@ import userModel from '../../models/api/Users';
 import userValidator from '../../validations/api/User';
 import bcrypt from 'bcrypt';
 
-router.post('/signup', validator.body(userValidator.createSchema, {joi: userValidator.joiOpts}), ( req, res, next ) => {
-
-    userModel.findOne({ 'mobile': req.body.mobile }, function (err, user) {
-        if (err) {
-            res.json({msg: 'Error occured' + err});
-        } else {
-            res.json({msg: 'Mobile number has already been taken'});
-        }
-    });
+router.post('/signup', validator.body(userValidator.signupSchema, {joi: userValidator.joiOpts}), ( req, res, next ) => {
 
     let salt = bcrypt.genSaltSync(10);
     let newUser = new userModel ({
@@ -29,9 +21,24 @@ router.post('/signup', validator.body(userValidator.createSchema, {joi: userVali
 
     newUser.save((error, user) => {
         if (error){
-            res.json({msg: 'Failed to add car' + error});
+            res.json({msg: 'Failed to add user' + error});
         } else {
             res.json({msg: 'Added car successfully'});
+        }
+    });
+});
+
+router.post('/signin', validator.body(userValidator.signinSchema, {joi: userValidator.joiOpts}), ( req, res, next ) => {
+
+    userModel.findOne({ 'email': req.body.email }, function (err, user) {
+        if (null !== err) {
+           res.json({msg: 'Error occurred' + err});
+        } else {
+            if ( bcrypt.compareSync(req.body.password, user.password) ){
+                res.json({msg: `Successfully signin ${ user }`});
+            } else {
+                res.json({msg: `Doesn't match email or password`});
+            }
         }
     });
 });

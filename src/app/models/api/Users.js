@@ -2,8 +2,9 @@
 
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
+import uniqueValidator from'mongoose-unique-validator';
 
-const userSchema = mongoose.Schema({
+const signUpSchema = mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -11,12 +12,14 @@ const userSchema = mongoose.Schema({
 
     mobile: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     password: {
@@ -39,9 +42,10 @@ const userSchema = mongoose.Schema({
        required: true
     }
 });
+signUpSchema.plugin(uniqueValidator);
 
 try {
-    const User =  module.exports = mongoose.model('User', userSchema);
+    const User =  module.exports = mongoose.model('User', signUpSchema);
 }
 catch(e) {
     console.log("Model already exist");

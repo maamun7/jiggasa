@@ -34,6 +34,7 @@
     "mongoose-data-seed": "^1.0.2",
     "mongoose-migration": "^0.2.0",
     "mongoose-seeder": "^1.2.1",
+    "mongoose-unique-validator": "^1.0.5",
     "node-mongoose-validator": "^1.2.0",
     "swagger-node-express": "^2.1.3"
   },
