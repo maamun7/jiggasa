@@ -16,7 +16,7 @@ router.post('/signup', validator.body(userValidator.signupSchema, {joi: userVali
         salt:salt,
         gender:req.body.gender,
         is_admin:req.body.is_admin,
-        created_at:'2017-07-27'
+        created_at: new Date()
     });
 
     newUser.save((error, user) => {
@@ -35,7 +35,13 @@ router.post('/signin', validator.body(userValidator.signinSchema, {joi: userVali
            res.json({msg: 'Error occurred' + err});
         } else {
             if ( bcrypt.compareSync(req.body.password, user.password) ){
-                res.json({msg: `Successfully signin ${ user }`});
+                res.json({
+                    success : true,
+                    name : user.name,
+                    mobile : user.mobile,
+                    email : user.email,
+                    gender : user.gender
+                });
             } else {
                 res.json({msg: `Doesn't match email or password`});
             }

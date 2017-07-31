@@ -40,8 +40,19 @@ const signUpSchema = mongoose.Schema({
     is_admin: {
         type: String,
        required: true
+    },
+
+    status: {
+        type: Number,
+        default: 1
+    },
+
+    created_at: {
+        type: Date,
+        default: new Date()
     }
 });
+
 signUpSchema.plugin(uniqueValidator);
 
 try {

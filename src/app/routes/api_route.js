@@ -8,4 +8,8 @@ router.use('/cars', car);
 router.use('/', User);
 
 
-module.exports = router;
+//module.exports = router;
+
+export default {
+    router
+}
