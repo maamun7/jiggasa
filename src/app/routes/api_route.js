@@ -10,6 +10,7 @@ router.use('/', User);
 
 //module.exports = router;
 
-export default {
-    router
-}
+export default router;
+
+
+

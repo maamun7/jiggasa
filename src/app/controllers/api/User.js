@@ -23,7 +23,7 @@ router.post('/signup', validator.body(userValidator.signupSchema, {joi: userVali
         if (error){
             res.json({msg: 'Failed to add user' + error});
         } else {
-            res.json({msg: 'Added car successfully'});
+            res.json({msg: 'Successfully user registered'});
         }
     });
 });

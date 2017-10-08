@@ -3,9 +3,9 @@
 import express from 'express';
 const app = express();
 // import swagger from 'swagger-node-express';
-import bodyParser from 'body-parser'
-import config from '../config/config'
-import apiRoute from './routes/api_route'
+import bodyParser from 'body-parser';
+import config from '../config/config';
+import apiRoute  from './routes/api_route';
 
 //Connect with database
 require('../config/database');
@@ -14,10 +14,18 @@ require('../config/database');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+//Set cross origin
+app.all('*', function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
 
 app.use('/v1', apiRoute);
 
 app.listen(config.development.port, config.development.host, config.development.callBack());
+
 
 //swagger.setAppHandler(app);
 
