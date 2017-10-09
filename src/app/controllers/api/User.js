@@ -4,6 +4,7 @@ const validator = require('express-joi-validation')({ passError: true});
 import userModel from '../../models/api/Users';
 import userValidator from '../../validations/api/User';
 import bcrypt from 'bcrypt';
+import { makeCustomError } from '../../helpers/helper'
 
 router.post('/signup', validator.body(userValidator.signupSchema, {joi: userValidator.joiOpts}), ( req, res, next ) => {
 
@@ -21,7 +22,7 @@ router.post('/signup', validator.body(userValidator.signupSchema, {joi: userVali
 
     newUser.save((error, user) => {
         if (error){
-            res.json({msg: 'Failed to add user' + error});
+            res.json(makeCustomError(error))
         } else {
             res.json({msg: 'Successfully user registered'});
         }
