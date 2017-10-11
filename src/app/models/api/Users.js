@@ -10,11 +10,11 @@ const signUpSchema = mongoose.Schema({
         required: true
     },
 
-    mobile: {
+ /*   mobile: {
         type: String,
         required: true,
         unique: true
-    },
+    },*/
 
     email: {
         type: String,
@@ -32,10 +32,10 @@ const signUpSchema = mongoose.Schema({
         required: true
     },
 
-    gender: {
+   /* gender: {
         type: String,
         required: true
-    },
+    },*/
 
     is_admin: {
         type: String,

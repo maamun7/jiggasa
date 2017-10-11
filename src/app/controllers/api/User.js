@@ -11,11 +11,11 @@ router.post('/signup', validator.body(userValidator.signupSchema, {joi: userVali
     let salt = bcrypt.genSaltSync(10);
     let newUser = new userModel ({
         name:req.body.name,
-        mobile:req.body.mobile,
+       // mobile:req.body.mobile,
         email:req.body.email,
         password:bcrypt.hashSync(req.body.password, salt),
         salt:salt,
-        gender:req.body.gender,
+       // gender:req.body.gender,
         is_admin:req.body.is_admin,
         created_at: new Date()
     });
@@ -24,7 +24,7 @@ router.post('/signup', validator.body(userValidator.signupSchema, {joi: userVali
         if (error){
             res.json(makeCustomError(error))
         } else {
-            res.json({msg: 'Successfully user registered'});
+            res.json({success: true, msg: 'Successfully user registered'});
         }
     });
 });

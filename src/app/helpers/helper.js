@@ -19,7 +19,7 @@ export const makeCustomError = (error) => {
             }
         }
 
-        return {msg: error._message, error: customError} ;
+        return {success: false, msg: error._message, error: customError} ;
     }
 
     return;
