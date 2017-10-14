@@ -39,9 +39,9 @@ router.post('/signin', validator.body(userValidator.signinSchema, {joi: userVali
                 res.json({
                     success : true,
                     name : user.name,
-                    mobile : user.mobile,
+                  //  mobile : user.mobile,
                     email : user.email,
-                    gender : user.gender
+                  //  gender : user.gender
                 });
             } else {
                 res.json({msg: `Doesn't match email or password`});
