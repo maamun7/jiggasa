@@ -1,4 +1,6 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import config from '../../config/config';
 export const generateHashPassword = plainTextPass => {
     return bcrypt.hashSync(plainTextPass, bcrypt.genSaltSync(10));
 };
@@ -24,9 +26,23 @@ export const makeCustomError = (error) => {
 
     return;
 };
-/*
 
-export default {
-    generateHashPassword,
-    makeCustomError
-};*/
+
+//Generate Token
+export const generateToken = (user) => {
+    //1. Dont use password and other sensitive fields
+    //2. Use fields that are useful in other parts of the
+    var userObj = {
+        name: user.name,
+        email: user.email,
+        _id: user.id.toString()
+    };
+
+    let token = jwt.sign(userObj, config.secretkey, {
+        expiresIn: 60 * 60 * 24 // expires in 24 hours
+    });
+
+    return token;
+};
+
+

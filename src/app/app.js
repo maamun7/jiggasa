@@ -10,6 +10,12 @@ import apiRoute  from './routes/api_route';
 //Connect with database
 require('../config/database');
 
+
+import passport from 'passport';
+require('../config/passport')(passport);
+app.use(passport.initialize());
+
+
 //Must be use at before calling any controller
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

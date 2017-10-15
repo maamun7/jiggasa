@@ -4,7 +4,7 @@ const validator = require('express-joi-validation')({ passError: true});
 import userModel from '../../models/api/Users';
 import userValidator from '../../validations/api/User';
 import bcrypt from 'bcrypt';
-import { makeCustomError } from '../../helpers/helper'
+import { makeCustomError, generateToken } from '../../helpers/helper'
 
 router.post('/signup', validator.body(userValidator.signupSchema, {joi: userValidator.joiOpts}), ( req, res, next ) => {
 
@@ -36,12 +36,13 @@ router.post('/signin', validator.body(userValidator.signinSchema, {joi: userVali
            res.json({msg: 'Error occurred' + err});
         } else {
             if ( bcrypt.compareSync(req.body.password, user.password) ){
+                let tokenInfo = { name: user.name, email: user.email, id: user._id };
+
                 res.json({
                     success : true,
                     name : user.name,
-                  //  mobile : user.mobile,
                     email : user.email,
-                  //  gender : user.gender
+                    token : 'JWT ' +generateToken(tokenInfo)
                 });
             } else {
                 res.json({msg: `Doesn't match email or password`});
