@@ -6,17 +6,16 @@ const app = express();
 import bodyParser from 'body-parser';
 import config from '../config/config';
 import apiRoute  from './routes/api_route';
+import passport from 'passport';
 
 //Connect with database
 require('../config/database');
 
-
-import passport from 'passport';
+// Configure json web token (jwt)
 require('../config/passport')(passport);
 app.use(passport.initialize());
 
-
-//Must be use at before calling any controller
+//Set body parser, must be use at before calling any controller
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -28,16 +27,14 @@ app.all('*', function(req, res, next) {
     next();
 });
 
+// All routes
 app.use('/v1', apiRoute);
 
+//Start server
 app.listen(config.development.port, config.development.host, config.development.callBack());
-
-
-//swagger.setAppHandler(app);
 
 //Custom Error handling
 app.use((err, req, res, next) => {
-
     if (err.error.isJoi) {
         // we had a joi error, let's return a custom 400 json response
         res.status(400).json({

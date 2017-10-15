@@ -5,26 +5,21 @@ import User from '../app/models/api/Users';
 
 module.exports = function(passport) {
 
-    var opts = {};
-    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-    opts.secretOrKey = config.secretkey;
+    var options = {
+        jwtFromRequest : ExtractJwt.fromAuthHeaderWithScheme('jwt'),
+        secretOrKey : config.secretkey
+    };
 
-    console.log("LocalStrategy -:", ExtractJwt.fromAuthHeaderAsBearerToken());
+    passport.use(new JwtStrategy(options, function(jwt_payload, next) {
 
-
-    passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-
-        console.log("jwt_payload LOG :", jwt_payload.id);
-
-        User.findById(jwt_payload.id, function(err, user) {
-            
+        User.findById(jwt_payload._id, function(err, user) {
             if (err) {
-                return done(err, false);
+                return next(err, false);
             }
             if (user) {
-                done(null, user);
+                next(null, user);
             } else {
-                done(null, false);
+                next(null, false);
             }
         });
     }));
