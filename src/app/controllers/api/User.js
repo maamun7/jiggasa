@@ -35,6 +35,7 @@ router.post('/signin', validator.body(userValidator.signinSchema, {joi: userVali
         if (null !== err) {
            res.json({msg: 'Error occurred' + err});
         } else {
+
             if ( bcrypt.compareSync(req.body.password, user.password) ){
                 let tokenInfo = { name: user.name, email: user.email, id: user._id };
 
