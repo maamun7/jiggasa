@@ -23,11 +23,12 @@ app.use(bodyParser.json());
 app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Authorization');
     next();
 });
 
 // All routes
+
 app.use('/v1', apiRoute);
 
 //Start server
