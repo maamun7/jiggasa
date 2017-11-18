@@ -4,7 +4,9 @@ const validator = require('express-joi-validation')({ passError: true});
 import userModel from '../../models/api/Users';
 import userValidator from '../../validations/api/User';
 import bcrypt from 'bcrypt';
-import { makeCustomError, generateToken } from '../../helpers/helper'
+import { makeCustomError, generateToken, decodeToken } from '../../helpers/helper'
+import passport from 'passport';
+import jwt from 'jsonwebtoken';
 
 router.post('/signup', validator.body(userValidator.signupSchema, {joi: userValidator.joiOpts}), ( req, res, next ) => {
 
@@ -54,5 +56,25 @@ router.post('/signin', validator.body(userValidator.signinSchema, {joi: userVali
         }
     });
 });
+
+router.get('/oauth_token',
+    passport.authenticate('jwt', { session: false}),
+    (req, res) => {
+        const token = req.headers.authorization;
+        const userIdInToken = decodeToken(token);
+
+        userModel.findOne({ '_id': userIdInToken }, function (err, user) {
+            if (null !== err) {
+                res.json({msg: 'Error occurred' + err});
+            } else {
+                res.json({
+                    success : true,
+                    msg : 'Success',
+                    name : user.name,
+                    email : user.email
+                });
+            }
+        });
+    });
 
 module.exports = router;

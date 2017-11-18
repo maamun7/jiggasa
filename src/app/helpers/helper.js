@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import config from '../../config/config';
+import jwt_decode from 'jwt-decode';
+
 export const generateHashPassword = plainTextPass => {
     return bcrypt.hashSync(plainTextPass, bcrypt.genSaltSync(10));
 };
@@ -38,11 +40,17 @@ export const generateToken = (user) => {
         _id: user.id.toString()
     };
 
-    let token = jwt.sign(userObj, config.secretkey, {
+    const token = jwt.sign(userObj, config.secretkey, {
         expiresIn: 60 * 60 * 24 // expires in 24 hours
     });
 
     return token;
+};
+
+//Decode Token
+export const decodeToken = (token) => {
+    const { _id } = jwt_decode(token);
+    return _id;
 };
 
 
