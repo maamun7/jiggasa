@@ -28,7 +28,6 @@ app.all('*', function(req, res, next) {
 });
 
 // All routes
-
 app.use('/v1', apiRoute);
 
 //Start server

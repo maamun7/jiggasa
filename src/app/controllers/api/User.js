@@ -38,15 +38,18 @@ router.post('/signin', validator.body(userValidator.signinSchema, {joi: userVali
 
             if ( bcrypt.compareSync(req.body.password, user.password) ){
                 let tokenInfo = { name: user.name, email: user.email, id: user._id };
-
                 res.json({
                     success : true,
+                    msg : 'Success',
                     name : user.name,
                     email : user.email,
                     token : 'JWT ' +generateToken(tokenInfo)
                 });
             } else {
-                res.json({msg: `Doesn't match email or password`});
+                res.json({
+                    success : false,
+                    msg: `Doesn't match email or password`
+                });
             }
         }
     });

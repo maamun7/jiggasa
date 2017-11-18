@@ -17,10 +17,10 @@ router.get('/domestic',
 
 // Wild animals page
 router.get('/wild', ( req, res, next ) => {
-    // res.send('Wolf, Fox, Eagle, Cobra, Tiger');
-    Car.find(function (err, cars) {
+    res.send('Wolf, Fox, Eagle, Cobra, Tiger');
+  /*  Car.find(function (err, cars) {
         res.json(cars);
-    });
+    });*/
 });
 
 //Added car
