@@ -34,11 +34,9 @@ router.post('/signup', validator.body(userValidator.signupSchema, {joi: userVali
 router.post('/signin', validator.body(userValidator.signinSchema, {joi: userValidator.joiOpts}), ( req, res, next ) => {
 
     userModel.findOne({ 'email': req.body.email }, function (err, user) {
-        if (null !== err) {
-           res.json({msg: 'Error occurred' + err});
-        } else {
 
-            if ( bcrypt.compareSync(req.body.password, user.password) ){
+        if (null !== user) {
+            if ( bcrypt.compareSync(req.body.password, user.password) ) {
                 let tokenInfo = { name: user.name, email: user.email, id: user._id };
                 res.json({
                     success : true,
@@ -47,12 +45,16 @@ router.post('/signin', validator.body(userValidator.signinSchema, {joi: userVali
                     email : user.email,
                     token : 'JWT ' +generateToken(tokenInfo)
                 });
-            } else {
-                res.json({
-                    success : false,
-                    msg: `Doesn't match email or password`
-                });
             }
+        } else {
+            res.json({
+                success : false,
+                msg: `Doesn't match email or password`
+            });
+        }
+
+        if (err) {
+            res.json({msg: 'Error occurred' + err});
         }
     });
 });
@@ -70,6 +72,7 @@ router.get('/oauth_token',
                 res.json({
                     success : true,
                     msg : 'Success',
+                    id : user._id,
                     name : user.name,
                     email : user.email
                 });
