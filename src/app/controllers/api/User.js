@@ -40,9 +40,6 @@ router.post('/signin', validator.body(userValidator.signinSchema, {joi: userVali
                 let tokenInfo = { name: user.name, email: user.email, id: user._id };
                 res.json({
                     success : true,
-                    msg : 'Success',
-                    name : user.name,
-                    email : user.email,
                     token : 'JWT ' +generateToken(tokenInfo)
                 });
             }
@@ -69,12 +66,15 @@ router.get('/oauth_token',
             if (null !== err) {
                 res.json({msg: 'Error occurred' + err});
             } else {
+                let users = [];
+                users['jjjj'] = 5;
                 res.json({
                     success : true,
                     msg : 'Success',
                     id : user._id,
-                    name : user.name,
-                    email : user.email
+                    entities : {
+                        users : { [user._id] : { name: user.name, email: user.email } }
+                    }
                 });
             }
         });
