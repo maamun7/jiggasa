@@ -5,6 +5,7 @@ const app = express();
 // import swagger from 'swagger-node-express';
 import bodyParser from 'body-parser';
 import config from '../config/config';
+import adminRoute  from './routes/admin_route';
 import apiRoute  from './routes/api_route';
 import passport from 'passport';
 
@@ -28,6 +29,7 @@ app.all('*', function(req, res, next) {
 });
 
 // All routes
+app.use('/admin', adminRoute);
 app.use('/v1', apiRoute);
 
 //Start server

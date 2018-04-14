@@ -1,11 +1,12 @@
 "use strict";
 import express from 'express';
 var router = express.Router();
-import User from './../controllers/api/User';
-import Question from './../controllers/api/Question';
+import User from './../controllers/admin/User';
+import Topic from './../controllers/admin/Topic';
 import passport from 'passport';
 
 // Token verification route
+/*
 router.get('/authenticate',
     passport.authenticate('jwt', { session: false }),
     function(req, res) {
@@ -13,9 +14,10 @@ router.get('/authenticate',
             success : true,
         });
     });
-
+    */
+    
 router.use('/', User);
-router.use('/', Question);
+router.use('/', Topic);
 
 
 //module.exports = router;
