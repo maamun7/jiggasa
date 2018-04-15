@@ -55,7 +55,7 @@ const signUpSchema = mongoose.Schema({
 signUpSchema.plugin(uniqueValidator);
 
 try {
-    const User =  module.exports = mongoose.model('User', signUpSchema);
+    const User =  module.exports = mongoose.model('Users', signUpSchema);
 }
 catch(e) {
     console.log("Model already exist");

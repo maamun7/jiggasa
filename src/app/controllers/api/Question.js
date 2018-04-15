@@ -7,21 +7,19 @@ import questionValidator from '../../validations/api/Question';
 import { makeCustomError } from '../../helpers/helper';
 import jwt from 'jsonwebtoken';
 
-router.post('/question/add', validator.body(questionValidator.questionSchema, {joi: questionValidator.joiOpts}), ( req, res, next ) => {
 
-    let newQuestion = new questionModel ({
-        name:req.body.name,
-        created_at: new Date()
-    });
-
-    newQuestion.save((error, topic) => {
-        if (error){
-            res.json(makeCustomError(error))
-        } else {
-            res.json({success: true, msg: 'Topic created successfully'});
-        }
-    });
-});
+router.get('/questions',
+   // passport.authenticate('jwt', { session: false}),
+    (req, res) => {
+        questionModel.find((err, topics) => {
+            if (err) {
+                res.send(err);            
+            } else {
+              res.send(topics);
+            }
+        });
+    }
+);
 
 router.get('/question/topics',
    // passport.authenticate('jwt', { session: false}),
@@ -31,11 +29,29 @@ router.get('/question/topics',
                 res.send(err);            
             } else {
               res.send(topics);
-              //.send and .json provide same response 
-               // res.json(users);
             }
         });
     }
 );
+
+router.post('/question/add', validator.body(questionValidator.questionSchema, {joi: questionValidator.joiOpts}), ( req, res, next ) => {
+
+    let newQuestion = new questionModel ({
+        title:req.body.title,
+        topicId:req.body.topicId,
+        createdBy:req.body.createdBy,
+        createdAt: new Date(),
+      //  answers:[{_id: 5, name: 'aaa'} , {_id: 6, name: 'bbb'}]
+        answers:[]
+    });
+
+    newQuestion.save((error, topic) => {
+        if (error){
+            res.json(makeCustomError(error))
+        } else {
+            res.json({success: true, msg: 'Question created successfully'});
+        }
+    });
+});
 
 module.exports = router;

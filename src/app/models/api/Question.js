@@ -4,10 +4,21 @@ mongoose.Promise = Promise;
 import uniqueValidator from'mongoose-unique-validator';
 
 const createQuestionSchema = mongoose.Schema({
-    name: {
+    title: {
         type: String,
-        required: true,
-        unique: true
+        required: true
+    },
+
+    topicId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Topic',        
+        required: true
+    },
+
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',    
+        required: true
     },
 
     image: {
@@ -16,12 +27,16 @@ const createQuestionSchema = mongoose.Schema({
         default: "Dummy.jpg"
     }, 
 
+    answers: {
+        type: Array,
+    }, 
+
     status: {
         type: Number,
         default: 1
     },
 
-    created_at: {
+    createdAt: {
         type: Date,
         default: new Date()
     }
