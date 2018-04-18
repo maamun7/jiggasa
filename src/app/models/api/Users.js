@@ -4,6 +4,7 @@ mongoose.Promise = Promise;
 import uniqueValidator from'mongoose-unique-validator';
 
 const signUpSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
     name: {
         type: String,
         required: true

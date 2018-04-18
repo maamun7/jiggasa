@@ -36,18 +36,18 @@ router.get('/question/topics',
 
 router.post('/question/add', validator.body(questionValidator.questionSchema, {joi: questionValidator.joiOpts}), ( req, res, next ) => {
 
-    let newQuestion = new questionModel ({
+    let question = new questionModel ({
         title:req.body.title,
         topicId:req.body.topicId,
         createdBy:req.body.createdBy,
-        createdAt: new Date(),
-      //  answers:[{_id: 5, name: 'aaa'} , {_id: 6, name: 'bbb'}]
-        answers:[]
+        createdAt: new Date()
     });
 
-    newQuestion.save((error, topic) => {
-        if (error){
-            res.json(makeCustomError(error))
+    console.log('question :', question);
+
+    question.save((err) => {
+        if (err){
+            res.json(makeCustomError(err))
         } else {
             res.json({success: true, msg: 'Question created successfully'});
         }
