@@ -39,11 +39,8 @@ router.post('/question/add', validator.body(questionValidator.questionSchema, {j
     let question = new questionModel ({
         title:req.body.title,
         topicId:req.body.topicId,
-        createdBy:req.body.createdBy,
-        createdAt: new Date()
+        createdBy:req.body.createdBy
     });
-
-    console.log('question :', question);
 
     question.save((err) => {
         if (err){
@@ -52,6 +49,21 @@ router.post('/question/add', validator.body(questionValidator.questionSchema, {j
             res.json({success: true, msg: 'Question created successfully'});
         }
     });
+});
+
+router.post('/question/answer', validator.body(questionValidator.answerSchema, {joi: questionValidator.joiOpts}), ( req, res, next ) => {
+
+    let updateObj = {
+        answer: req.body.answer,
+        createdBy: req.body.createdBy
+    };
+
+    let bulk = db.questionModel.initializeUnorderedBulkOp();
+    bulk.find( { _id: req.body.questionId } ).update( { $pull: { "answers": { "createdBy": req.body.createdBy } } } );
+    bulk.find( { _id: req.body.questionId } ).update( { $addToSet: { "answers": updateObj } } );
+    bulk.execute();
+
+    res.json({success: true, msg: 'Question created updated'});
 });
 
 module.exports = router;

@@ -4,7 +4,6 @@ mongoose.Promise = Promise;
 import uniqueValidator from'mongoose-unique-validator';
 
 const createQuestionSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     title: {
         type: String,
         required: true
@@ -26,11 +25,11 @@ const createQuestionSchema = mongoose.Schema({
         type: String,
         unique: false,
         default: "Dummy.jpg"
-    }, 
+    },        
 
     likes: [
         {
-            user_id: {
+            userId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
             }
@@ -44,7 +43,6 @@ const createQuestionSchema = mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
             },
-
             votes: [
                 {
                     user_id: {
@@ -53,7 +51,6 @@ const createQuestionSchema = mongoose.Schema({
                     }
                 }
             ],
-
             createdAt: { 
                 type: Date,
                 default:  new Date()

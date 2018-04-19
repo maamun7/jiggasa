@@ -17,7 +17,6 @@ router.get('/authenticate',
 router.use('/', User);
 router.use('/', Question);
 
-
 //module.exports = router;
 
 export default router;
