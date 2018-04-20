@@ -1,8 +1,8 @@
 var express = require('express')
     , router = express.Router();
 const validator = require('express-joi-validation')({ passError: true});
-import questionModel from '../../models/api/Question';
-import topicModel from '../../models/admin/Topics';
+import Question from '../../models/api/Question';
+import Topic from '../../models/admin/Topics';
 import questionValidator from '../../validations/api/Question';
 import { makeCustomError } from '../../helpers/helper';
 import jwt from 'jsonwebtoken';
@@ -11,7 +11,7 @@ import jwt from 'jsonwebtoken';
 router.get('/questions',
    // passport.authenticate('jwt', { session: false}),
     (req, res) => {
-        questionModel.find((err, topics) => {
+        Question.find((err, topics) => {
             if (err) {
                 res.send(err);            
             } else {
@@ -24,7 +24,7 @@ router.get('/questions',
 router.get('/question/topics',
    // passport.authenticate('jwt', { session: false}),
     (req, res) => {
-        topicModel.find((err, topics) => {
+        Topic.find((err, topics) => {
             if (err) {
                 res.send(err);            
             } else {
@@ -36,7 +36,7 @@ router.get('/question/topics',
 
 router.post('/question/add', validator.body(questionValidator.questionSchema, {joi: questionValidator.joiOpts}), ( req, res, next ) => {
 
-    let question = new questionModel ({
+    let question = new Question ({
         title:req.body.title,
         topicId:req.body.topicId,
         createdBy:req.body.createdBy
@@ -51,19 +51,61 @@ router.post('/question/add', validator.body(questionValidator.questionSchema, {j
     });
 });
 
-router.post('/question/answer', validator.body(questionValidator.answerSchema, {joi: questionValidator.joiOpts}), ( req, res, next ) => {
+router.post('/question/answer', validator.body(questionValidator.answerSchema, { joi: questionValidator.joiOpts } ), ( req, res, next ) => {
 
-    let updateObj = {
+    let answer = {
         answer: req.body.answer,
         createdBy: req.body.createdBy
     };
 
-    let bulk = db.questionModel.initializeUnorderedBulkOp();
-    bulk.find( { _id: req.body.questionId } ).update( { $pull: { "answers": { "createdBy": req.body.createdBy } } } );
-    bulk.find( { _id: req.body.questionId } ).update( { $addToSet: { "answers": updateObj } } );
-    bulk.execute();
+    Question.findOne({ _id : req.body.questionId },
+        (err, item) => {
+            //If happen error that means did not found answer by the user id
+            //, 'answers.createdBy': req.body.createdBy 
+            if (err) {
+                console.log('Error occur :', 'Yes !');
+            } else {
+               // console.log('item :', item);
+                let answerArray = item.answers;
+               // console.log('answerArray :', answerArray);
+                let ppp = answerArray.find(key => {
+                    if (key.createdBy == req.body.createdBy) {
+                        return true;
+                    }
+                });
+                console.log('---ppp- obj :', ppp);
 
-    res.json({success: true, msg: 'Question created updated'});
+            }
+        });
+
+  /*   Question.update(
+        { _id: req.body.questionId },
+        { $pull: { "answers": { createdBy: req.body.createdBy } } },
+        (error, success) => {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log(success);
+            }
+
+        });
+    Question.update(
+        { _id: req.body.questionId },
+        { $addToSet: { "answers": answer } } ,
+        (error, success) => {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log(success);
+            }
+        }); */
+
+  /*  let bulk = Question.collection.initializeUnorderedBulkOp();
+    bulk.find( { _id: req.body.questionId } ).update( { $pull: { "answers": { createdBy: req.body.createdBy } } } );
+    bulk.find( { _id: req.body.questionId } ).update( { $addToSet: { "answers": updateObj } } );
+    bulk.execute(); */
+
+    res.json({success: true, msg: 'Question updated'});
 });
 
 module.exports = router;

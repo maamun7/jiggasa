@@ -37,17 +37,18 @@ app.listen(config.development.port, config.development.host, config.development.
 
 //Custom Error handling
 app.use((err, req, res, next) => {
-    if (err.error.isJoi) {
-        // we had a joi error, let's return a custom 400 json response
-        res.status(400).json({
-           // type: err.type, // will be "query" here, but could be "headers", "body", or "params"
-            msg: err.error.toString(),
-            error: {}
-        });
-
+    
+    if (err.hasOwnProperty('error')){
+        if (err.error.hasOwnProperty('isJoi')) {
+            // we had a joi error, let's return a custom 400 json response
+            res.status(400).json({
+                // type: err.type, // will be "query" here, but could be "headers", "body", or "params"
+                msg: err.error.toString(),
+                error: {}
+            });
+        }
     } else {
         // pass on to another error handler
         next(err);
-
     }
 });

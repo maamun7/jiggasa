@@ -1,7 +1,7 @@
 "use strict";
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
-import uniqueValidator from'mongoose-unique-validator';
+import uniqueValidator from 'mongoose-unique-validator';
 
 const createQuestionSchema = mongoose.Schema({
     title: {
