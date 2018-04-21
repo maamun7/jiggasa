@@ -65,15 +65,15 @@ router.post('/question/answer', validator.body(questionValidator.answerSchema, {
             if (err) {
                 console.log('Error occur :', 'Yes !');
             } else {
-                console.log('item :', item.answers);
                 let answerArray = item.answers;
-                let existAnswer = answerArray.find(key => key.createdBy === req.body.createdBy);
+                let existAnswer = answerArray.find(key => key.createdBy == req.body.createdBy);
                 if( typeof existAnswer === 'undefined' ) {
                     //Insert
-                    console.log('DEBUGG :', 'in if');
                     Question.update(
                         { _id: req.body.questionId },
-                        { $push: { "answers": answer } },
+                        { 
+                            $push : { answers: answer } 
+                        },
                         (error, success) => {
                             if (error) {
                                 console.log(error);
@@ -83,10 +83,9 @@ router.post('/question/answer', validator.body(questionValidator.answerSchema, {
                         });
                 } else {
                     //Update
-                    console.log('DEBUGG :', 'in else');
                     Question.update(
-                        { _id: req.body.questionId },
-                        { $set: { "answers": { answer: req.body.answer, } } } ,
+                        { _id: req.body.questionId, 'answers.createdBy' : req.body.createdBy },
+                        { $set: { "answers": { answer: req.body.answer, updatedAt: new Date() } } } ,
                         (error, success) => {
                             if (error) {
                                 console.log(error);
