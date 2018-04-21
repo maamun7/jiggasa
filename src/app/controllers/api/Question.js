@@ -65,16 +65,36 @@ router.post('/question/answer', validator.body(questionValidator.answerSchema, {
             if (err) {
                 console.log('Error occur :', 'Yes !');
             } else {
-               // console.log('item :', item);
+                console.log('item :', item.answers);
                 let answerArray = item.answers;
-               // console.log('answerArray :', answerArray);
-                let ppp = answerArray.find(key => {
-                    if (key.createdBy == req.body.createdBy) {
-                        return true;
-                    }
-                });
-                console.log('---ppp- obj :', ppp);
-
+                let existAnswer = answerArray.find(key => key.createdBy === req.body.createdBy);
+                if( typeof existAnswer === 'undefined' ) {
+                    //Insert
+                    console.log('DEBUGG :', 'in if');
+                    Question.update(
+                        { _id: req.body.questionId },
+                        { $push: { "answers": answer } },
+                        (error, success) => {
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                console.log('Successfully added answer');
+                            }
+                        });
+                } else {
+                    //Update
+                    console.log('DEBUGG :', 'in else');
+                    Question.update(
+                        { _id: req.body.questionId },
+                        { $set: { "answers": { answer: req.body.answer, } } } ,
+                        (error, success) => {
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                console.log(success);
+                            }
+                        });
+                }
             }
         });
 
