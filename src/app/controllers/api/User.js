@@ -67,7 +67,6 @@ router.get('/oauth_token',
                 res.json({msg: 'Error occurred' + err});
             } else {
                 let users = [];
-                users['jjjj'] = 5;
                 res.json({
                     success : true,
                     msg : 'Success',

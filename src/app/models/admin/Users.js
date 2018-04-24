@@ -55,7 +55,7 @@ const createUserSchema = mongoose.Schema({
 createUserSchema.plugin(uniqueValidator);
 
 try {
-    const User =  module.exports = mongoose.model('Users', createUserSchema);
+    const AdminUser =  module.exports = mongoose.model('AdminUser', createUserSchema);
 }
 catch(e) {
     console.log("Model already exist");
