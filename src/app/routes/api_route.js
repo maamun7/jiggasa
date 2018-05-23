@@ -3,6 +3,7 @@ import express from 'express';
 var router = express.Router();
 import User from './../controllers/api/User';
 import Question from './../controllers/api/Question';
+import Search from './../controllers/api/Search';
 import passport from 'passport';
 
 // Token verification route
@@ -16,6 +17,7 @@ router.get('/authenticate',
 
 router.use('/', User);
 router.use('/', Question);
+router.use('/', Search);
 
 //module.exports = router;
 

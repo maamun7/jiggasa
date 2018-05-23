@@ -69,6 +69,8 @@ const createQuestionSchema = mongoose.Schema({
     }
 });
 
+createQuestionSchema.index({ title: 'text', 'answers.answer': 'text' });
+
 createQuestionSchema.plugin(uniqueValidator);
 
 try {
