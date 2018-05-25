@@ -8,14 +8,20 @@ import { makeCustomError } from '../../helpers/helper';
 import jwt from 'jsonwebtoken';
 
 router.get('/search', (req, res) => {
-        Search.find({$text: {$search: req.query.keyword} })
-       .exec((err, docs) => { 
-            if (err) {
-                res.send(err);            
-            } else {
-                res.send(docs);
-            }
-        });
+    console.log('res :', res);
+
+    Search.findOne({ $text: { $search: req.query.keyword } })
+    .exec(function(err, questions) {
+        if (err) {
+            res.json({success : false, msg: 'Error occurred' + err});
+        } else {
+            res.json({
+                success : true,
+                msg : 'Success',
+                data : questions
+            });
+        }
+    });
 });
 
 module.exports = router;

@@ -69,6 +69,7 @@ const createQuestionSchema = mongoose.Schema({
     }
 });
 
+//Create index for text search
 createQuestionSchema.index({ title: 'text', 'answers.answer': 'text' });
 
 createQuestionSchema.plugin(uniqueValidator);
